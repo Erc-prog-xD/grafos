@@ -55,11 +55,12 @@ namespace GrafosApp.Models
                 adjacenciasPonderadas[destino][origem] = peso;
             }
 
-            // Também mantém a lista de adjacências não ponderada
-            if (!adjacencias[origem].Contains(destino))
-                adjacencias[origem].Add(destino);
-            if (!ehDirecionado && !adjacencias[destino].Contains(origem))
+            // Para multigrafo, sempre adicionar as conexões
+            adjacencias[origem].Add(destino);
+            if (!ehDirecionado)
+            {
                 adjacencias[destino].Add(origem);
+            }
         }
 
         public List<int> ObterVertices()

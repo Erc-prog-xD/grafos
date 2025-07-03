@@ -89,22 +89,15 @@ namespace GrafosApp.Algoritmos
         private static List<(int origem, int destino)> CriarListaArestas(Grafo grafo)
         {
             var arestas = new List<(int, int)>();
-            var arestasProcessadas = new HashSet<string>();
+            var arestasAdicionadas = new HashSet<string>();
 
             foreach (int origem in grafo.ObterVertices())
             {
                 foreach (int destino in grafo.ObterVizinhos(origem))
                 {
-                    // Para grafos não direcionados, evitar duplicatas
-                    string chave1 = $"{origem}-{destino}";
-                    string chave2 = $"{destino}-{origem}";
-                    
-                    if (!arestasProcessadas.Contains(chave1) && !arestasProcessadas.Contains(chave2))
-                    {
-                        arestas.Add((origem, destino));
-                        arestasProcessadas.Add(chave1);
-                        arestasProcessadas.Add(chave2);
-                    }
+                    // Para multigrafo, precisamos incluir todas as arestas, mesmo duplicadas
+                    string chave = $"{Math.Min(origem, destino)}-{Math.Max(origem, destino)}";
+                    arestas.Add((origem, destino));
                 }
             }
 

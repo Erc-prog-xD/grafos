@@ -17,13 +17,24 @@ namespace GrafosApp
 
             try
             {
-                string caminhoArquivo = "exemplo.txt";
+                string caminhoArquivo;
                 
-                // Criar arquivo de exemplo se não existir
-                if (!File.Exists(caminhoArquivo))
+                // Verificar se foi passado arquivo como argumento
+                if (args.Length > 0)
                 {
-                    Console.WriteLine("Criando arquivo de exemplo...\n");
-                    CarregadorGrafo.CriarArquivoExemplo(caminhoArquivo);
+                    caminhoArquivo = args[0];
+                    Console.WriteLine($"Usando arquivo especificado: {caminhoArquivo}");
+                }
+                else
+                {
+                    caminhoArquivo = "exemplo.txt";
+                    
+                    // Criar arquivo de exemplo se não existir
+                    if (!File.Exists(caminhoArquivo))
+                    {
+                        Console.WriteLine("Criando arquivo de exemplo...\n");
+                        CarregadorGrafo.CriarArquivoExemplo(caminhoArquivo);
+                    }
                 }
 
                 // Carregar grafo do arquivo
@@ -56,13 +67,19 @@ namespace GrafosApp
                 Console.WriteLine($"Custo Total: {custoTotal:F2}");
                 Console.WriteLine("===============================================");
 
-                // Demonstração adicional com exemplo maior
-                Console.WriteLine("\n\nDeseja testar com um exemplo maior? (s/n)");
-                var resposta = Console.ReadLine();
-                
-                if (resposta?.ToLower() == "s")
+                // Salvar resultado em arquivo
+                SalvarResultado(caminhoArquivo, cicloHamiltoniano, custoTotal);
+
+                // Demonstração adicional com exemplo maior (apenas se não foi passado arquivo)
+                if (args.Length == 0)
                 {
-                    TestarExemploMaior();
+                    Console.WriteLine("\n\nDeseja testar com um exemplo maior? (s/n)");
+                    var resposta = Console.ReadLine();
+                    
+                    if (resposta?.ToLower() == "s")
+                    {
+                        TestarExemploMaior();
+                    }
                 }
             }
             catch (Exception ex)
@@ -71,10 +88,26 @@ namespace GrafosApp
                 Console.WriteLine("\nVerifique se o arquivo de entrada está no formato correto:");
                 Console.WriteLine("- Primeira linha: número de vértices");
                 Console.WriteLine("- Próximas N linhas: matriz de adjacências com pesos");
+                Console.WriteLine("\nUso: dotnet run [arquivo.txt]");
             }
 
             Console.WriteLine("\nPressione qualquer tecla para sair...");
             Console.ReadKey();
+        }
+
+        static void SalvarResultado(string arquivoEntrada, List<int> ciclo, double custo)
+        {
+            string arquivoSaida = Path.ChangeExtension(arquivoEntrada, ".resultado.txt");
+            
+            var conteudo = $"Arquivo de entrada: {arquivoEntrada}\n";
+            conteudo += $"Algoritmo: Christofides\n";
+            conteudo += $"Data/Hora: {DateTime.Now:yyyy-MM-dd HH:mm:ss}\n";
+            conteudo += $"\nResultado:\n";
+            conteudo += $"Ciclo Hamiltoniano: {string.Join(" -> ", ciclo)}\n";
+            conteudo += $"Custo Total: {custo:F2}\n";
+            
+            File.WriteAllText(arquivoSaida, conteudo);
+            Console.WriteLine($"\nResultado salvo em: {arquivoSaida}");
         }
 
         static void TestarExemploMaior()

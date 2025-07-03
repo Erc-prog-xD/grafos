@@ -1,0 +1,7 @@
+Arquivo de entrada: exemplo.txt
+Algoritmo: Christofides
+Data/Hora: 2025-07-03 13:54:39
+
+Resultado:
+Ciclo Hamiltoniano: 1 -> 2 -> 3 -> 4 -> 1
+Custo Total: 90,00
