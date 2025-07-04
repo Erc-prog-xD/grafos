@@ -35,12 +35,33 @@ namespace GrafosProgram
             {
                 var (custo, emparelhamento) = EmparelhamentoPerfeito.EmparelhamentoPerfeitoMinimo(matriz, impares);
                 EmparelhamentoPerfeito.ExibirEmparelhamento(emparelhamento, custo);
+                
+                // Passo IV: União de T e M formando multigrafo H
+                Console.WriteLine("\n=== PASSO IV: CONSTRUÇÃO DO MULTIGRAFO H ===");
+                var multigrafoH = MultigrafoH.ConstruirMultigrafoH(agm, emparelhamento, tamanho);
+                MultigrafoH.ExibirMultigrafoH(multigrafoH, tamanho);
+                
+                // Verificar se todos os vértices têm grau par
+                bool grausPares = MultigrafoH.VerificarGrausPares(multigrafoH, tamanho);
+                
+                if (grausPares)
+                {
+                    int totalArestas = MultigrafoH.ContarArestas(multigrafoH, tamanho);
+                    Console.WriteLine($"\nResumo do Multigrafo H:");
+                    Console.WriteLine($"- Total de arestas: {totalArestas}");
+                    Console.WriteLine($"- Arestas da AGM: {agm.Count}");
+                    Console.WriteLine($"- Arestas do emparelhamento: {emparelhamento.Count}");
+                }
             }
             else
             {
                 Console.WriteLine("\nTodos os vértices têm grau par. Nenhum emparelhamento necessário.");
             }
+
+
         }
 
     }
+
 }
+

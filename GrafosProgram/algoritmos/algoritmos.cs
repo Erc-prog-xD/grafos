@@ -311,7 +311,7 @@ namespace algoritmos
                     {
                         int novaMask = mask | (1 << primeiro) | (1 << segundo);
                         double novoCusto = dp[mask] + matriz[vertices[primeiro] - 1, vertices[segundo] - 1];
-                        
+
                         if (novoCusto < dp[novaMask])
                         {
                             dp[novaMask] = novoCusto;
@@ -351,5 +351,176 @@ namespace algoritmos
             return (dp[(1 << n) - 1], emparelhamento);
         }
     }
+    
+    /// <summary>
+    /// Classe para construir e manipular o multigrafo H (união de T e M)
+    /// </summary>
+    public static class MultigrafoH
+    {
+        /// <summary>
+        /// Constrói o multigrafo H combinando a AGM (T) e o emparelhamento perfeito (M)
+        /// </summary>
+        /// <param name="agm">Lista de arestas da árvore geradora mínima</param>
+        /// <param name="emparelhamento">Lista de pares do emparelhamento perfeito</param>
+        /// <param name="tamanho">Número de vértices do grafo</param>
+        /// <returns>Matriz de adjacências do multigrafo H</returns>
+        public static int[,] ConstruirMultigrafoH(List<Aresta> agm, List<(int, int)> emparelhamento, int tamanho)
+        {
+            // Inicializar matriz do multigrafo H
+            int[,] multigrafoH = new int[tamanho, tamanho];
 
+            // Adicionar arestas da árvore geradora mínima T
+            foreach (var aresta in agm)
+            {
+                multigrafoH[aresta.Origem, aresta.Destino] += 1;
+                multigrafoH[aresta.Destino, aresta.Origem] += 1;
+            }
+
+            // Adicionar arestas do emparelhamento perfeito M
+            foreach (var (v1, v2) in emparelhamento)
+            {
+                // Ajustar índices (emparelhamento usa base 1, matriz usa base 0)
+                int origem = v1 - 1;
+                int destino = v2 - 1;
+                multigrafoH[origem, destino] += 1;
+                multigrafoH[destino, origem] += 1;
+            }
+
+            return multigrafoH;
+        }
+
+        /// <summary>
+        /// Exibe o multigrafo H com sua matriz de adjacências e lista de arestas
+        /// </summary>
+        /// <param name="multigrafoH">Matriz de adjacências do multigrafo H</param>
+        /// <param name="tamanho">Número de vértices</param>
+        public static void ExibirMultigrafoH(int[,] multigrafoH, int tamanho)
+        {
+            Console.WriteLine("\n=== MULTIGRAFO H (T ∪ M) ===");
+            Console.WriteLine("Matriz de adjacências do multigrafo H:");
+            
+            // Cabeçalho
+            Console.Write("     ");
+            for (int i = 0; i < tamanho; i++)
+            {
+                Console.Write($"{i + 1,3}");
+            }
+            Console.WriteLine();
+
+            // Matriz
+            for (int i = 0; i < tamanho; i++)
+            {
+                Console.Write($"{i + 1,2} [ ");
+                for (int j = 0; j < tamanho; j++)
+                {
+                    Console.Write($"{multigrafoH[i, j],2} ");
+                }
+                Console.WriteLine("]");
+            }
+
+            // Lista de arestas
+            Console.WriteLine("\nArestas do multigrafo H:");
+            bool temArestas = false;
+            for (int i = 0; i < tamanho; i++)
+            {
+                for (int j = i + 1; j < tamanho; j++)
+                {
+                    if (multigrafoH[i, j] > 0)
+                    {
+                        Console.WriteLine($"  Vértice {i + 1} - Vértice {j + 1}: {multigrafoH[i, j]} aresta(s)");
+                        temArestas = true;
+                    }
+                }
+            }
+            
+            if (!temArestas)
+            {
+                Console.WriteLine("  Nenhuma aresta encontrada.");
+            }
+        }
+
+        /// <summary>
+        /// Verifica se todos os vértices do multigrafo H possuem grau par
+        /// </summary>
+        /// <param name="multigrafoH">Matriz de adjacências do multigrafo H</param>
+        /// <param name="tamanho">Número de vértices</param>
+        /// <returns>True se todos os vértices têm grau par, False caso contrário</returns>
+        public static bool VerificarGrausPares(int[,] multigrafoH, int tamanho)
+        {
+            Console.WriteLine("\n=== VERIFICAÇÃO DE GRAUS NO MULTIGRAFO H ===");
+            bool todosGrausPares = true;
+            
+            for (int i = 0; i < tamanho; i++)
+            {
+                int grau = 0;
+                for (int j = 0; j < tamanho; j++)
+                {
+                    grau += multigrafoH[i, j];
+                }
+                
+                Console.WriteLine($"Vértice {i + 1}: grau = {grau} ({(grau % 2 == 0 ? "par" : "ímpar")})");
+                
+                if (grau % 2 != 0)
+                {
+                    todosGrausPares = false;
+                }
+            }
+
+            if (todosGrausPares)
+            {
+                Console.WriteLine("\n✓ Todos os vértices do multigrafo H possuem grau par!");
+                Console.WriteLine("✓ Passo IV concluído com sucesso!");
+                Console.WriteLine("✓ O multigrafo H está pronto para encontrar o circuito euleriano.");
+            }
+            else
+            {
+                Console.WriteLine("\n✗ ERRO: Alguns vértices ainda possuem grau ímpar!");
+                Console.WriteLine("✗ Verificar implementação dos passos anteriores.");
+            }
+
+            return todosGrausPares;
+        }
+
+        /// <summary>
+        /// Obtém a lista de graus de todos os vértices do multigrafo H
+        /// </summary>
+        /// <param name="multigrafoH">Matriz de adjacências do multigrafo H</param>
+        /// <param name="tamanho">Número de vértices</param>
+        /// <returns>Lista com os graus de cada vértice</returns>
+        public static List<int> ObterGraus(int[,] multigrafoH, int tamanho)
+        {
+            List<int> graus = new List<int>();
+            
+            for (int i = 0; i < tamanho; i++)
+            {
+                int grau = 0;
+                for (int j = 0; j < tamanho; j++)
+                {
+                    grau += multigrafoH[i, j];
+                }
+                graus.Add(grau);
+            }
+            
+            return graus;
+        }
+
+        /// <summary>
+        /// Conta o número total de arestas no multigrafo H
+        /// </summary>
+        /// <param name="multigrafoH">Matriz de adjacências do multigrafo H</param>
+        /// <param name="tamanho">Número de vértices</param>
+        /// <returns>Número total de arestas</returns>
+        public static int ContarArestas(int[,] multigrafoH, int tamanho)
+        {
+            int totalArestas = 0;
+            for (int i = 0; i < tamanho; i++)
+            {
+                for (int j = i + 1; j < tamanho; j++)
+                {
+                    totalArestas += multigrafoH[i, j];
+                }
+            }
+            return totalArestas;
+        }
+    }
 }
