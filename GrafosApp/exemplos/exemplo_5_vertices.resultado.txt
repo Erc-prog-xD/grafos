@@ -1,7 +1,0 @@
-Arquivo de entrada: ./exemplos/exemplo_5_vertices.txt
-Algoritmo: Christofides
-Data/Hora: 2025-07-03 13:54:30
-
-Resultado:
-Ciclo Hamiltoniano: 3 -> 5 -> 2 -> 4 -> 1 -> 3
-Custo Total: 100,00
