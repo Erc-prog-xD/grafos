@@ -1,0 +1,15 @@
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\bin\Debug\net8.0\GrafosProgram.exe
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\bin\Debug\net8.0\GrafosProgram.deps.json
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\bin\Debug\net8.0\GrafosProgram.runtimeconfig.json
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\bin\Debug\net8.0\GrafosProgram.dll
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\bin\Debug\net8.0\GrafosProgram.pdb
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.AssemblyInfoInputs.cache
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.AssemblyInfo.cs
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.csproj.CoreCompileInputs.cache
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.sourcelink.json
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.dll
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\refint\GrafosProgram.dll
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.pdb
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\GrafosProgram.genruntimeconfig.cache
+C:\Users\eric.araujo\trabalho\grafos\GrafosProgram\obj\Debug\net8.0\ref\GrafosProgram.dll
