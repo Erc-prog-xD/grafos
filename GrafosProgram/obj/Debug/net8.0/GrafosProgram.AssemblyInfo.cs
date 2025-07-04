@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GrafosProgram")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e01137daf47ae889368ab667ac1d654a0404c0dd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1db353162d8765846a38bd918894b63776ff29a")]
 [assembly: System.Reflection.AssemblyProductAttribute("GrafosProgram")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GrafosProgram")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

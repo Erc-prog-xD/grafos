@@ -2,19 +2,19 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace methods
+namespace Methods
 {
     public static class GeradorGrafo
     {
-       
 
-        public static double[,] GerarMatrizAleatoria(int tamanho)
+
+        public static void GerarMatrizAleatoria(int tamanho)
         {
             Random random = new Random();
             double[,] matriz = new double[tamanho, tamanho];
-            
+
             Console.WriteLine($"Gerando matriz de adjacências {tamanho}x{tamanho}...");
-            
+
             // Preencher matriz
             for (int i = 0; i < tamanho; i++)
             {
@@ -32,10 +32,9 @@ namespace methods
                     }
                 }
             }
-            
+
             matriz = AjustarDesigualdadeTriangular(matriz, tamanho);
             SalvarMatrizEmArquivo(matriz, tamanho);
-            return matriz;
         }
 
         private static double[,] AjustarDesigualdadeTriangular(double[,] matriz, int tamanho)
@@ -57,11 +56,26 @@ namespace methods
             }
             return matriz;
         }
+        public static (int tamanho, double[,] matriz) LerMatrizDeArquivo(string caminhoArquivo)
+        {
+            string[] linhas = File.ReadAllLines(caminhoArquivo);
+            int tamanho = int.Parse(linhas[0]);
+            double[,] matriz = new double[tamanho, tamanho];
 
+            for (int i = 0; i < tamanho; i++)
+            {
+                string[] valores = linhas[i + 1].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                for (int j = 0; j < tamanho; j++)
+                {
+                    matriz[i, j] = double.Parse(valores[j]);
+                }
+            }
+            return (tamanho, matriz);
+        }
         public static void ExibirMatriz(double[,] matriz, int tamanho)
         {
             Console.WriteLine("\nMatriz gerada:");
-            
+
             // Cabeçalho
             Console.Write("     ");
             for (int i = 0; i < tamanho; i++)
@@ -69,7 +83,7 @@ namespace methods
                 Console.Write($"{i + 1,6}");
             }
             Console.WriteLine();
-            
+
             // Linhas da matriz
             for (int i = 0; i < tamanho; i++)
             {
@@ -82,7 +96,7 @@ namespace methods
             }
         }
 
-        public static string SalvarMatrizEmArquivo(double[,] matriz, int tamanho)
+        public static void SalvarMatrizEmArquivo(double[,] matriz, int tamanho)
         {
             // Criar diretório se não existir
             string diretorio = "arquivoExemplo";
@@ -90,15 +104,15 @@ namespace methods
             {
                 Directory.CreateDirectory(diretorio);
             }
-            
+
             // Nome do arquivo
             string nomeArquivo = $"grafo_exemplo.txt";
             string caminhoCompleto = Path.Combine(diretorio, nomeArquivo);
-            
+
             // Criar conteúdo
             StringBuilder conteudo = new StringBuilder();
             conteudo.AppendLine(tamanho.ToString());
-            
+
             for (int i = 0; i < tamanho; i++)
             {
                 string linha = "";
@@ -109,9 +123,11 @@ namespace methods
                 }
                 conteudo.AppendLine(linha);
             }
-            
+
             File.WriteAllText(caminhoCompleto, conteudo.ToString());
-            return nomeArquivo;
         }
+
+
     }
+
 }
